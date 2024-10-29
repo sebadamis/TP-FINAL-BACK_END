@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
-// const User = require("../models/users.model");
 const userControllers = require("../controllers/user.controllers");
 const validation = require("../middlewares/auth");
 const isAdmin = require("../middlewares/isAdmin");
 
 router.get("/users",validation, userControllers.getUsers);
 
-router.post("/users", userControllers.createUser);
+router.post("/users",[validation, isAdmin], userControllers.createUser);
 
 
 // get user por ID
