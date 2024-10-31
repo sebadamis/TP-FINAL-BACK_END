@@ -35,6 +35,10 @@ async function createUser(req, resp){
     
     const user = new User(req.body);
 
+    if(req.file){
+        user.image = req.file.filename;
+    }
+
     bcrypt.hash(user.password, saltRounds, (error, hash)=> {
         
         if(error){
@@ -65,15 +69,15 @@ async function getUserById(req, resp) {
     
     try {
 
-        const { id } = req.params;
+        const { _id } = req.params;
 
-        if(req.user.role !== "admin" && id !== req.user._id){
+        if(req.user.role !== "admin" && _id !== req.user.id){
             return resp.status(403).send({
                 message: "no tienes permisos para acceder a este usuario"
             });
         }
 
-        const user = await User.findById(id);
+        const user = await User.findById(_id);
 
         if (!user) {
             return resp.status(404).send("el usuario NO fue encontrado");
@@ -96,9 +100,9 @@ async function borrarUser(req, resp) {
     try {
         
 
-        const { id } = req.params;
+        const { _id } = req.params;
 
-        const borrarUsuario = await User.findByIdAndDelete(id)
+        const borrarUsuario = await User.findByIdAndDelete(_id)
 
         
         return resp.status(200).send({message: "el usuario fue borrado correctamente", borrarUsuario});
@@ -116,9 +120,9 @@ async function updateUser(req, resp) {
     
     try {
 
-        const {id} = req.params;
+        const {_id} = req.params;
 
-        if(req.user.role !== "admin" && id !== req.user._id){
+        if(req.user.role !== "admin" && _id !== req.user.id){
             return resp.status(403).send({
                 message: "no tienes permiso para actualizar este usuario"
             })
@@ -126,7 +130,7 @@ async function updateUser(req, resp) {
 
         // remover prop password (hacer el hash)
 
-    const user = await User.findByIdAndUpdate(id, req.body, {new: true});
+    const user = await User.findByIdAndUpdate(_id, req.body, {new: true});
 
     // console.log(user);
 

@@ -26,6 +26,11 @@ async function createProduct(req, resp){
         console.log(req.body);
 
         const product = new Product(req.body);
+
+        if(req.file){
+            product.image = req.file.filename;
+        }
+
         const newProduct = await product.save();
 
         return resp.status(201).send({
@@ -47,10 +52,10 @@ async function getProductsById(req, resp) {
     
     try {
 
-        const { id } = req.params;
+        const { _id } = req.params;
 
 
-        const product = await Product.findById(id);
+        const product = await Product.findById(_id);
 
         if (!product) {
             return resp.status(404).send("el producto NO fue encontrado");
@@ -71,9 +76,9 @@ async function borrarProduct(req, resp) {
     try {
         
 
-        const { id } = req.params;
+        const { _id } = req.params;
 
-        const borrarProducto = await Product.findByIdAndDelete(id)
+        const borrarProducto = await Product.findByIdAndDelete(_id)
 
         
         return resp.status(200).send({message: "el producto fue borrado correctamente", borrarProducto});
@@ -91,10 +96,10 @@ async function updateProduct(req, resp) {
     
     try {
 
-        const {id} = req.params;
+        const {_id} = req.params;
         
 
-    const product = await Product.findByIdAndUpdate(id, req.body, {new: true});
+    const product = await Product.findByIdAndUpdate(_id, req.body, {new: true});
 
     // console.log(user);
 

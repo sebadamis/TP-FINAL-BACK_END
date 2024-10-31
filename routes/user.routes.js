@@ -3,10 +3,11 @@ const router = express.Router();
 const userControllers = require("../controllers/user.controllers");
 const validation = require("../middlewares/auth");
 const isAdmin = require("../middlewares/isAdmin");
+const uploadUsers = require("../middlewares/uploadFile.Users");
 
 router.get("/users",validation, userControllers.getUsers);
 
-router.post("/users",[validation, isAdmin], userControllers.createUser);
+router.post("/users",[validation, isAdmin, uploadUsers], userControllers.createUser);
 
 
 // get user por ID
@@ -17,7 +18,7 @@ router.get("/users/:id",validation, userControllers.getUserById);
 router.delete("/users/:id",[validation, isAdmin], userControllers.borrarUser);
 
 // update usuario
-router.put("/users/:id",validation, userControllers.updateUser);
+router.put("/users/:id",[validation, isAdmin], userControllers.updateUser);
 
 
 // login para autenticar usuario
