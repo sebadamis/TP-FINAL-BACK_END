@@ -71,7 +71,7 @@ async function getUserById(req, resp) {
 
         const { _id } = req.params;
 
-        if(req.user.role !== "admin" && _id !== req.user.id){
+        if(req.user.role !== "admin" && _id !== req.user._id){
             return resp.status(403).send({
                 message: "no tienes permisos para acceder a este usuario"
             });
@@ -122,7 +122,7 @@ async function updateUser(req, resp) {
 
         const {_id} = req.params;
 
-        if(req.user.role !== "admin" && _id !== req.user.id){
+        if(req.user.role !== "admin" && _id !== req.user._id){
             return resp.status(403).send({
                 message: "no tienes permiso para actualizar este usuario"
             })

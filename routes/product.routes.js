@@ -24,6 +24,4 @@ router.delete("/products/:id",[validation, isAdmin], productController.borrarPro
 
 
 
-
-
 module.exports = router;
