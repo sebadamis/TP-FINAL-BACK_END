@@ -52,7 +52,7 @@ const userSchema = new Schema({
         minlength: 3,
         maxlength: 100
     },
-    Image: {
+    image: {
         type: String
     },
     role: {

@@ -13,14 +13,14 @@ router.get("/products",validation, productController.getProducts);
 router.post("/products",[validation, isAdmin, uploadProducts], productController.createProduct);
 
 // obtener producto por id
-router.get("/products/:id",validation, productController.getProductsById);
+router.get("/products/:_id",validation, productController.getProductsById);
 
 // actualizar producto
-router.put("/products/:id",[validation, isAdmin], productController.updateProduct);
+router.put("/products/:_id",[validation, isAdmin], productController.updateProduct);
 
 
 //borrar producto
-router.delete("/products/:id",[validation, isAdmin], productController.borrarProduct);
+router.delete("/products/:_id",[validation, isAdmin], productController.borrarProduct);
 
 
 

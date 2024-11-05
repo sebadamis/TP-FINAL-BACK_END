@@ -11,14 +11,14 @@ router.post("/users",[validation, isAdmin, uploadUsers], userControllers.createU
 
 
 // get user por ID
-router.get("/users/:id",validation, userControllers.getUserById);
+router.get("/users/:_id",validation, userControllers.getUserById);
 
 
 // borrar usuario
-router.delete("/users/:id",[validation, isAdmin], userControllers.borrarUser);
+router.delete("/users/:_id",[validation, isAdmin], userControllers.borrarUser);
 
 // update usuario
-router.put("/users/:id",[validation, isAdmin], userControllers.updateUser);
+router.put("/users/:_id",[validation, isAdmin], userControllers.updateUser);
 
 
 // login para autenticar usuario

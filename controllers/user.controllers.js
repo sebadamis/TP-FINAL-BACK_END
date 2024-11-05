@@ -13,7 +13,10 @@ async function getUsers(req, resp) {
         const users = await User.find();
         console.log(users);
         
-        return resp.status(200).send(users);
+        return resp.status(200).send({
+            message: "obtuviste los usuarios",
+            users
+        });
 
     } catch (error) {
         console.log(error);
@@ -51,7 +54,10 @@ async function createUser(req, resp){
         user.save().then(nuevoUser => {
 
             console.log(nuevoUser);
-            return resp.status(201).send(nuevoUser);
+            return resp.status(201).send({
+                message: "creaste nuevo usuario",
+                nuevoUser
+            });
 
         }).catch(error => {
             console.log(error);
@@ -85,7 +91,10 @@ async function getUserById(req, resp) {
 
         user.password = undefined;
 
-        return resp.status(200).send(user);
+        return resp.status(200).send({
+            message: "obtuviste el usuario requerido",
+            user
+        });
 
     } catch (error) {
         console.log(error)
@@ -105,7 +114,10 @@ async function borrarUser(req, resp) {
         const borrarUsuario = await User.findByIdAndDelete(_id)
 
         
-        return resp.status(200).send({message: "el usuario fue borrado correctamente", borrarUsuario});
+        return resp.status(200).send({
+            message: "el usuario fue borrado correctamente", 
+            borrarUsuario
+        });
 
     } catch (error) {
         console.log(error);
