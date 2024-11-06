@@ -34,23 +34,21 @@ const userSchema = new Schema({
         maxlength: 70,
         trim: true
     },
-    datebirth: {
-        type: String,
-        require: true
+    // datebirth: {
+    //     type: String,
+    //     require: true
 
-        // validate: {
-        //     validator: (value) => {
-        //         const fecha = new Date(value);
-        //         const hoy = new Date();
-        //         return fecha < hoy;
-        //     }
-        // }
-    },
+    //     // validate: {
+    //     //     validator: (value) => {
+    //     //         const fecha = new Date(value);
+    //     //         const hoy = new Date();
+    //     //         return fecha < hoy;
+    //     //     }
+    //     // }
+    // },
     pais: {
         type: String,
         require: true,
-        minlength: 3,
-        maxlength: 100
     },
     image: {
         type: String

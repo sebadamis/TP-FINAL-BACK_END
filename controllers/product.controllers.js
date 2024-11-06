@@ -26,6 +26,7 @@ async function createProduct(req, resp){
         console.log(req.body);
 
         const product = new Product(req.body);
+        
 
         if(req.file){
             product.image = req.file.filename;

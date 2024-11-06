@@ -15,7 +15,7 @@ async function getUsers(req, resp) {
         
         return resp.status(200).send({
             message: "obtuviste los usuarios",
-            users
+            users: users
         });
 
     } catch (error) {
@@ -36,27 +36,27 @@ async function createUser(req, resp){
         });
     }
     
-    const user = new User(req.body);
+    const users = new User(req.body);
 
     if(req.file){
-        user.image = req.file.filename;
+        users.image = req.file.filename;
     }
 
-    bcrypt.hash(user.password, saltRounds, (error, hash)=> {
+    bcrypt.hash(users.password, saltRounds, (error, hash)=> {
         
         if(error){
             console.log(error);
             return resp.status(500).send("error al crear usuario");
         }
 
-        user.password = hash;
+        users.password = hash;
 
-        user.save().then(nuevoUser => {
+        users.save().then(async (nuevoUser) => {
 
             console.log(nuevoUser);
             return resp.status(201).send({
                 message: "creaste nuevo usuario",
-                nuevoUser
+                users: nuevoUser
             });
 
         }).catch(error => {
@@ -77,23 +77,23 @@ async function getUserById(req, resp) {
 
         const { _id } = req.params;
 
-        if(req.user.role !== "admin" && _id !== req.user._id){
+        if(req.users.role !== "admin" && _id !== req.users._id){
             return resp.status(403).send({
                 message: "no tienes permisos para acceder a este usuario"
             });
         }
 
-        const user = await User.findById(_id);
+        const usersById = await User.findById(_id);
 
-        if (!user) {
+        if (!usersById) {
             return resp.status(404).send("el usuario NO fue encontrado");
         }
 
-        user.password = undefined;
+        usersById.password = undefined;
 
         return resp.status(200).send({
             message: "obtuviste el usuario requerido",
-            user
+            users: usersById
         });
 
     } catch (error) {
@@ -116,7 +116,7 @@ async function borrarUser(req, resp) {
         
         return resp.status(200).send({
             message: "el usuario fue borrado correctamente", 
-            borrarUsuario
+            users: borrarUsuario
         });
 
     } catch (error) {
@@ -134,7 +134,7 @@ async function updateUser(req, resp) {
 
         const {_id} = req.params;
 
-        if(req.user.role !== "admin" && _id !== req.user._id){
+        if(req.users.role !== "admin" && _id !== req.users._id){
             return resp.status(403).send({
                 message: "no tienes permiso para actualizar este usuario"
             })
@@ -142,14 +142,14 @@ async function updateUser(req, resp) {
 
         // remover prop password (hacer el hash)
 
-    const user = await User.findByIdAndUpdate(_id, req.body, {new: true});
+    const users = await User.findByIdAndUpdate(_id, req.body, {new: true});
 
     // console.log(user);
 
     return resp.status(200).send({
         ok: true,
         message: "usuario actualizado correctamente",
-        user
+        users: users
     })
 
         
@@ -174,15 +174,15 @@ async function login(req, resp){
             });
         }
 
-        const user = await User.findOne({ email });
+        const users = await User.findOne({ email });
 
-        if(!user){
+        if(!users){
             return resp.status(400).send({
                 message: "alguno de los datos es incorrecto"
             });
         }
 
-        const match = await bcrypt.compare(password, user.password)
+        const match = await bcrypt.compare(password, users.password)
 
         if(!match){
             return resp.status(400).send({
@@ -191,12 +191,12 @@ async function login(req, resp){
         }
         
         // datos que NO quiero que me muestre en la respuesta
-        user.password = undefined;
+        users.password = undefined;
         // user.role = undefined;
-        user.__v = undefined;
+        users.__v = undefined;
         
 
-        const token = jwt.sign(user.toJSON(), SECRET, {
+        const token = jwt.sign(users.toJSON(), SECRET, {
             expiresIn: "1h"
         });
 
@@ -206,7 +206,7 @@ async function login(req, resp){
 
         return resp.send({
             message: "login exitoso",
-            user,
+            user: users,  //no MODIFICAR EL USER: users
             token
         })
 
