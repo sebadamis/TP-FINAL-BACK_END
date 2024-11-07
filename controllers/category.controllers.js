@@ -7,7 +7,7 @@ async function getCategories(req, resp) {
         const categories = await Category.find();
         return resp.status(200).send({
             message: "Categorías obtenidas OK",
-            categories
+            categories: categories
         })
 
     } catch (error) {
@@ -27,7 +27,7 @@ async function createCategory(req, resp) {
 
         return resp.status(200).send({
             message: "Creaste una nueva Categoría ",
-            newCategory
+            categories: newCategory
         })
 
     } catch (error) {

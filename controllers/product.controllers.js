@@ -62,9 +62,11 @@ async function getProductsById(req, resp) {
             return resp.status(404).send("el producto NO fue encontrado");
         }
 
-        // user.password = undefined;
 
-        return resp.status(200).send(product);
+        return resp.status(200).send({
+            message: "se encontró el producto",
+            products: product
+        });
 
     } catch (error) {
         console.log(error)
@@ -82,7 +84,10 @@ async function borrarProduct(req, resp) {
         const borrarProducto = await Product.findByIdAndDelete(_id)
 
         
-        return resp.status(200).send({message: "el producto fue borrado correctamente", borrarProducto});
+        return resp.status(200).send({
+            message: "el producto fue borrado correctamente", 
+            products: borrarProducto
+        });
 
     } catch (error) {
         console.log(error);
@@ -107,7 +112,7 @@ async function updateProduct(req, resp) {
     return resp.status(200).send({
         ok: true,
         message: "producto actualizado correctamente",
-        product
+        products: product
     })
 
         
