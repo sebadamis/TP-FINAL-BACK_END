@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-// definir esquema de nuestro modelo
 
 const userSchema = new Schema({
     name: { 
