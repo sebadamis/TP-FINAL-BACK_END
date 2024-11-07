@@ -8,7 +8,7 @@ async function getProducts(req, resp){
 
         return resp.status(200).send({
             message: "obtener todos los productos",
-            products
+            products: products
         });
 
     } catch (error) {
@@ -104,16 +104,15 @@ async function updateProduct(req, resp) {
 
         const {_id} = req.params;
         
+        const productUpdated = await Product.findByIdAndUpdate(_id, req.body, {new: true});
 
-    const product = await Product.findByIdAndUpdate(_id, req.body, {new: true});
+        // console.log(user);
 
-    // console.log(user);
-
-    return resp.status(200).send({
-        ok: true,
-        message: "producto actualizado correctamente",
-        products: product
-    })
+        return resp.status(200).send({
+            ok: true,
+            message: "producto actualizado correctamente",
+            products: productUpdated
+        })
 
         
 

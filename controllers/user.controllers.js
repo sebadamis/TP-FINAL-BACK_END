@@ -121,7 +121,9 @@ async function borrarUser(req, resp) {
 
     } catch (error) {
         console.log(error);
-        return resp.status(500).send("error al borrar el usuario");
+        return resp.status(500).send({
+            message: "error al borrar el usuario"
+        });
     }
 
 }
@@ -137,7 +139,7 @@ async function updateUser(req, resp) {
         if(req.users.role !== "admin" && _id !== req.users._id){
             return resp.status(403).send({
                 message: "no tienes permiso para actualizar este usuario"
-            })
+            });
         }
 
         // remover prop password (hacer el hash)
@@ -149,7 +151,7 @@ async function updateUser(req, resp) {
     return resp.status(200).send({
         ok: true,
         message: "usuario actualizado correctamente",
-        users: users
+        users: users 
     })
 
         
