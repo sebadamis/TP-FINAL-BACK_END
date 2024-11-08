@@ -136,6 +136,12 @@ async function updateUser(req, resp) {
 
         const {_id} = req.params;
 
+        const users = req.body;
+
+        if(req.file){
+            users.image = req.file.filename;
+        }
+
         if(req.users.role !== "admin" && _id !== req.users._id){
             return resp.status(403).send({
                 message: "no tienes permiso para actualizar este usuario"
@@ -144,21 +150,24 @@ async function updateUser(req, resp) {
 
         // remover prop password (hacer el hash)
 
-    const users = await User.findByIdAndUpdate(_id, req.body, {new: true});
+    const userUpdated = await User.findByIdAndUpdate(_id, users, {new: true});
 
     // console.log(user);
 
     return resp.status(200).send({
         ok: true,
         message: "usuario actualizado correctamente",
-        users: users 
+        users: userUpdated
     })
 
         
 
     } catch (error) {
         console.log(error);
-        return error;
+        return resp.status(400).send({
+            message: "Error al actualizar Usuario",
+            error
+        });
     }
 }
 

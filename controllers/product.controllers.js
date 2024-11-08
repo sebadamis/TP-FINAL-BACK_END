@@ -103,8 +103,14 @@ async function updateProduct(req, resp) {
     try {
 
         const {_id} = req.params;
+
+        const products = req.body;
+
+        if(req.file){
+            products.image = req.file.filename;
+        }
         
-        const productUpdated = await Product.findByIdAndUpdate(_id, req.body, {new: true});
+        const productUpdated = await Product.findByIdAndUpdate(_id, products, {new: true});
 
         // console.log(user);
 
