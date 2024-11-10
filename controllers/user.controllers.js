@@ -42,6 +42,8 @@ async function createUser(req, resp){
         users.image = req.file.filename;
     }
 
+    
+
     bcrypt.hash(users.password, saltRounds, (error, hash)=> {
         
         if(error){
@@ -70,7 +72,6 @@ async function createUser(req, resp){
 
 // get user por ID
 
-// ERROR EN GET USER BY ID (CANNOT READ PROPERTIES OF UNDEFINED - ROLE)
 async function getUserById(req, resp) {
     
     try {
@@ -98,7 +99,10 @@ async function getUserById(req, resp) {
 
     } catch (error) {
         console.log(error)
-        return resp.status(500).send("error al obtener el usuario");
+        return resp.status(500).send({
+            message:"error al obtener el usuario",
+            error
+        });
     }
 }
 
