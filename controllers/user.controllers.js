@@ -78,11 +78,11 @@ async function getUserById(req, resp) {
 
         const { _id } = req.params;
 
-        if(req.users.role !== "admin" && _id !== req.users._id){
-            return resp.status(403).send({
-                message: "no tienes permisos para acceder a este usuario"
-            });
-        }
+        // if(req.users.role !== "admin" && _id !== req.users._id){
+        //     return resp.status(403).send({
+        //         message: "no tienes permisos para acceder a este usuario"
+        //     });
+        // }
 
         const usersById = await User.findById(_id);
 
@@ -145,12 +145,14 @@ async function updateUser(req, resp) {
         if(req.file){
             users.image = req.file.filename;
         }
+        
+        //IMPLEMENTAR VALIDACION ROL DEL USER EN DB VS USER EN BODY 
 
-        if(req.users.role !== "admin" && _id !== req.users._id){
-            return resp.status(403).send({
-                message: "no tienes permiso para actualizar este usuario"
-            });
-        }
+        // if(users.role !== "admin" && _id !== users._id){
+        //     return resp.status(403).send({
+        //         message: "no tienes permiso para actualizar este usuario"
+        //     });
+        // }
 
         // remover prop password (hacer el hash)
 
