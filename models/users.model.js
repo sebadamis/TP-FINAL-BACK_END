@@ -14,7 +14,7 @@ const userSchema = new Schema({
         type: String,
         require: true,
         trim: true,
-        minlength: 5,
+        minlength: 4,
         maxlength: 100,
         unique: true,
         index: true,
@@ -33,18 +33,6 @@ const userSchema = new Schema({
         maxlength: 70,
         trim: true
     },
-    // datebirth: {
-    //     type: String,
-    //     require: true
-
-    //     // validate: {
-    //     //     validator: (value) => {
-    //     //         const fecha = new Date(value);
-    //     //         const hoy = new Date();
-    //     //         return fecha < hoy;
-    //     //     }
-    //     // }
-    // },
     pais: {
         type: String,
         require: true,
@@ -61,8 +49,7 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    comment: {type: String},
-    price: {type: Number}
+    comment: {type: String}
 });
 
 module.exports = mongoose.model("User", userSchema);

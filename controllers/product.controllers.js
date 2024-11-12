@@ -23,7 +23,7 @@ async function getProducts(req, resp){
 async function createProduct(req, resp){
     try {
 
-        console.log(req.body);
+        // console.log(req.body);
 
         const product = new Product(req.body);
         

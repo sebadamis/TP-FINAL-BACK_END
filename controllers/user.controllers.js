@@ -11,7 +11,7 @@ async function getUsers(req, resp) {
     try {
         
         const users = await User.find();
-        console.log(users);
+        // console.log(users);
         
         return resp.status(200).send({
             message: "obtuviste los usuarios",
@@ -55,7 +55,7 @@ async function createUser(req, resp){
 
         users.save().then(async (nuevoUser) => {
 
-            console.log(nuevoUser);
+            // console.log(nuevoUser);
             return resp.status(201).send({
                 message: "creaste nuevo usuario",
                 users: nuevoUser
@@ -126,7 +126,8 @@ async function borrarUser(req, resp) {
     } catch (error) {
         console.log(error);
         return resp.status(500).send({
-            message: "error al borrar el usuario"
+            message: "error al borrar el usuario",
+            error
         });
     }
 
@@ -183,7 +184,7 @@ async function login(req, resp){
     try {
 
         const { email, password } = req.body;
-        console.log(email, password);
+        // console.log(email, password);
 
         if(!email || !password ) {
             return resp.status(400).send({
@@ -209,7 +210,6 @@ async function login(req, resp){
         
         // datos que NO quiero que me muestre en la respuesta
         users.password = undefined;
-        // user.role = undefined;
         users.__v = undefined;
         
 
@@ -217,7 +217,7 @@ async function login(req, resp){
             expiresIn: "1h"
         });
 
-        console.log(token);
+        // console.log(token);
 
 
 
