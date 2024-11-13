@@ -4,12 +4,19 @@ const Order = require("../models/orders.models.js");
 async function getOrders(req, resp){
     try {
         
-        const orders = await Order.find().populate("user", "name email").populate("products.product", "name price image");
+        const orders = await Order.find()
+                                    .populate("user", "name email")
+                                    .populate("products.product", "name price image");
 
+        console.log(req.body);
+        
         return resp.status(200).send({
             message: "obtener todos los productos",
             orders
         });
+
+        
+
 
     } catch (error) {
         console.log(error);
@@ -24,7 +31,7 @@ async function getOrders(req, resp){
 async function createOrder(req, resp){
     try {
 
-        console.log(req.body);
+        // console.log(req.body);
 
         const order = new Order(req.body);
         
@@ -33,13 +40,14 @@ async function createOrder(req, resp){
 
         return resp.status(201).send({
             message: "creaste una orden de compra",
-            orders: newOrder
+            newOrder
         });
 
     } catch (error) {
         console.log(error);
-        return resp.status(500).send({
-            message: "error al crear orden de compra"
+        return resp.status(401).send({
+            message: "Error al crear orden de compra",
+            error
         });
     }
     

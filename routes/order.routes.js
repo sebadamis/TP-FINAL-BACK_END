@@ -16,6 +16,4 @@ router.post("/orders",validation, orderController.createOrder);
 
 
 
-
-
 module.exports = router;

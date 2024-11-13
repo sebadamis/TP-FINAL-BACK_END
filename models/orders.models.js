@@ -6,35 +6,38 @@ const orderSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",
-        require: true
+        require: true,
     },
     products: [
         {
             product: {
                 type: Schema.Types.ObjectId,
                 ref: "Product",
-                require: true
+                require: true,
             },
-            quantity: Number,
-            price: Number
-
-        
+            quantity: {
+                type: Number,
+                require: true,
+            },
+            price: Number,
         }
     ],
+    total: {
+        type: Number,
+        require: true,
+    },
     createdAt: {
         type: Date, 
-        default: Date.now
+        default: Date.now,
     },
     updatedAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
-    total: Number,
     status: {
         type: String,
-        default: "Pendiente"
-    }
-    
+        default: "Pendiente",
+    },
 })
 
 

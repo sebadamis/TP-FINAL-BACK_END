@@ -9,7 +9,6 @@ const productSchema = new Schema({
     image: String,
     createdAt: {type: Date, default: Date.now},
     active: {type: Boolean, default: true}
-    // updatedAt: {type: Date, default: Date.now}
 });
 
 
