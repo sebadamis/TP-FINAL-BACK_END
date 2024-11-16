@@ -11,8 +11,16 @@ router.get("/orders",validation, orderController.getOrders);
 //crear orden de compra
 router.post("/orders",validation, orderController.createOrder);
 
+//borrar orden de compra
+router.delete("/orders/:_id", validation, orderController.borrarOrder);
 
 
+// obtener producto por id
+router.get("/products/:_id",validation, orderController.getProductsById);
+
+
+//actualizar orden de compra
+router.put("/orders/:_id", validation, orderController.updateOrder);
 
 
 
